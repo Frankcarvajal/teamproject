@@ -1,26 +1,20 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React from "react";
+import useAxios from "axios-hooks";
 
-export default class Fetch extends Component {
-  state = {
-    data: [],
-  };
-  componentWillMount() {
-    axios.get("https://api.mocki.io/v1/b043df5a").then((response) => {
-      // console.log("response :", response.data);
-      this.setState({
-        data: response.data,
-      });
-    });
-  }
+export default function Fetch() {
+  const [{ data, loading, error }, refetch] = useAxios(
+    "https://api.mocki.io/v1/b043df5a"
+  );
 
-  render() {
-    console.log("this.state.data :", this.state.data);
-    return (
-      <div>
-        {this.state.data &&
-          this.state.data.map((city) => <p key={city.name}>{city.name}</p>)}
-      </div>
-    );
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
+  return (
+    <div>
+      <button onClick={refetch}>refetch</button>
+      {data.map((city) => (
+        <p key={city.name}>{city.name}</p>
+      ))}
+    </div>
+  );
 }
