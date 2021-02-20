@@ -6,7 +6,7 @@ export default function Fetch() {
     "https://api.mocki.io/v1/b043df5a"
   );
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading....</p>;
   if (error) return <p>Error!</p>;
 
   return (
